@@ -6,7 +6,7 @@
 
 A Python tool to extract individual SVG files from concatenated `svgs.txt` files.
 
-Current version: **SF Symbols 7.0**
+Current version: **[SF Symbols 7.0](https://developer.apple.com/sf-symbols/)**
 
 ## Directory Structure
 
@@ -52,6 +52,9 @@ The directories are organized by SF Symbol rendering variants and colors:
 
 # Update SF Symbols badge in README
 ./sfe --update-badge | -u
+
+# Extract SVGs to custom directory (preserves directory structure)
+./sfe --output ~/Desktop/SVGs | -o ~/Desktop/SVGs
 
 # Extract all SVGs
 ./sfe
