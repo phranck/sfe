@@ -14,20 +14,20 @@ Current version: **[SF Symbols 7.0](https://developer.apple.com/sf-symbols/)**
 sfe/
 ├── sfe                 # Extractor script
 ├── names.txt           # Symbol names (one per line)
-├── hie/                # Hierarchical variant
-│   ├── pri/            # Primary color
+├── hierarchical/       # Hierarchical variant
+│   ├── primary/        # Primary color
 │   │   └── svgs.txt
-│   └── sec/            # Secondary color
+│   └── secondary/      # Secondary color
 │       └── svgs.txt
-├── mon/                # Monochrome variant
-│   ├── pri/            # Primary color
+├── monochrome/         # Monochrome variant
+│   ├── primary/        # Primary color
 │   │   └── svgs.txt
-│   └── sec/            # Secondary color
+│   └── secondary/      # Secondary color
 │       └── svgs.txt
-└── mul/                # Multicolor variant
-    ├── pri/            # Primary color
+└── multicolor/         # Multicolor variant
+    ├── primary/        # Primary color
     │   └── svgs.txt
-    └── sec/            # Secondary color
+    └── secondary/      # Secondary color
         └── svgs.txt
 ```
 
@@ -36,13 +36,13 @@ sfe/
 The directories are organized by SF Symbol rendering variants and colors:
 
 **Variants:**
-- `hie/` - Hierarchical
-- `mon/` - Monochrome
-- `mul/` - Multicolor
+- `hierarchical/` - Hierarchical
+- `monochrome/` - Monochrome
+- `multicolor/` - Multicolor
 
 **Colors:**
-- `pri/` - Primary Color
-- `sec/` - Secondary Color
+- `primary/` - Primary Color
+- `secondary/` - Secondary Color
 
 ## Usage
 

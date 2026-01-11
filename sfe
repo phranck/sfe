@@ -21,12 +21,12 @@ class Colors:
 # Expected file structure
 REQUIRED_FILES = [
     "names.txt",
-    "hie/pri/svgs.txt",
-    "hie/sec/svgs.txt",
-    "mon/pri/svgs.txt",
-    "mon/sec/svgs.txt",
-    "mul/pri/svgs.txt",
-    "mul/sec/svgs.txt",
+    "hierarchical/primary/svgs.txt",
+    "hierarchical/secondary/svgs.txt",
+    "monochrome/primary/svgs.txt",
+    "monochrome/secondary/svgs.txt",
+    "multicolor/primary/svgs.txt",
+    "multicolor/secondary/svgs.txt",
 ]
 
 STRUCTURE_DIAGRAM = f"""
@@ -34,20 +34,20 @@ STRUCTURE_DIAGRAM = f"""
 
   {Colors.CYAN}<script-directory>/{Colors.RESET}
   ├── names.txt
-  ├── hie/
-  │   ├── pri/
+  ├── hierarchical/
+  │   ├── primary/
   │   │   └── svgs.txt
-  │   └── sec/
+  │   └── secondary/
   │       └── svgs.txt
-  ├── mon/
-  │   ├── pri/
+  ├── monochrome/
+  │   ├── primary/
   │   │   └── svgs.txt
-  │   └── sec/
+  │   └── secondary/
   │       └── svgs.txt
-  └── mul/
-      ├── pri/
+  └── multicolor/
+      ├── primary/
       │   └── svgs.txt
-      └── sec/
+      └── secondary/
           └── svgs.txt
 """
 
@@ -93,8 +93,8 @@ def print_structure_error(missing_files):
 
 def count_extracted_svgs():
     """Count extracted SVG files in one variant/color directory. Returns 0 if none exist."""
-    # Check one directory (hie/pri) as reference - all should have the same count
-    check_dir = os.path.join(BASE_DIR, "hie", "pri")
+    # Check one directory (hierarchical/primary) as reference - all should have the same count
+    check_dir = os.path.join(BASE_DIR, "hierarchical", "primary")
     if not os.path.exists(check_dir):
         return 0
     svg_files = [f for f in os.listdir(check_dir) if f.endswith(".svg")]
@@ -103,7 +103,7 @@ def count_extracted_svgs():
 
 def clean_svgs(base_path):
     """Delete all extracted SVG files from the directory structure."""
-    svg_dirs = ["hie/pri", "hie/sec", "mon/pri", "mon/sec", "mul/pri", "mul/sec"]
+    svg_dirs = ["hierarchical/primary", "hierarchical/secondary", "monochrome/primary", "monochrome/secondary", "multicolor/primary", "multicolor/secondary"]
     total_deleted = 0
 
     for rel_dir in svg_dirs:
@@ -152,8 +152,8 @@ def update_readme_badge():
         f.write(new_content)
 
     # Calculate statistics
-    variants = 3  # hie, mon, mul
-    colors = 2    # pri, sec
+    variants = 3  # hierarchical, monochrome, multicolor
+    colors = 2    # primary, secondary
     per_variant = svg_count * colors
     total_svgs = svg_count * variants * colors
 
