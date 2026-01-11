@@ -56,6 +56,12 @@ The directories are organized by SF Symbol rendering variants and colors:
 # Extract SVGs to custom directory (preserves directory structure)
 ./sfe --output ~/Desktop/SVGs | -o ~/Desktop/SVGs
 
+# Delete all extracted SVGs (current directory)
+./sfe --clean
+
+# Delete all extracted SVGs (custom directory)
+./sfe --clean ~/Desktop/SVGs
+
 # Extract all SVGs
 ./sfe
 ```
