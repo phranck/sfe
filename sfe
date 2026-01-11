@@ -19,15 +19,16 @@ class Colors:
 
 
 # Expected file structure
-REQUIRED_FILES = [
-    "names.txt",
-    "hierarchical/primary/svgs.txt",
-    "hierarchical/secondary/svgs.txt",
-    "monochrome/primary/svgs.txt",
-    "monochrome/secondary/svgs.txt",
-    "multicolor/primary/svgs.txt",
-    "multicolor/secondary/svgs.txt",
+SVG_BASE_DIRS = [
+    "hierarchical/primary",
+    "hierarchical/secondary",
+    "monochrome/primary",
+    "monochrome/secondary",
+    "multicolor/primary",
+    "multicolor/secondary",
 ]
+
+REQUIRED_FILES = ["names.txt"] + [f"{d}/svgs.txt" for d in SVG_BASE_DIRS]
 
 STRUCTURE_DIAGRAM = f"""
 {Colors.BOLD}Expected directory structure:{Colors.RESET}
@@ -94,7 +95,7 @@ def print_structure_error(missing_files):
 def count_extracted_svgs():
     """Count extracted SVG files in one variant/color directory. Returns 0 if none exist."""
     # Check one directory (hierarchical/primary) as reference - all should have the same count
-    check_dir = os.path.join(BASE_DIR, "hierarchical", "primary")
+    check_dir = os.path.join(BASE_DIR, SVG_BASE_DIRS[0])
     if not os.path.exists(check_dir):
         return 0
     svg_files = [f for f in os.listdir(check_dir) if f.endswith(".svg")]
@@ -103,7 +104,7 @@ def count_extracted_svgs():
 
 def clean_svgs(base_path):
     """Delete all extracted SVG files from the directory structure."""
-    svg_dirs = ["hierarchical/primary", "hierarchical/secondary", "monochrome/primary", "monochrome/secondary", "multicolor/primary", "multicolor/secondary"]
+    svg_dirs = SVG_BASE_DIRS
     total_deleted = 0
 
     for rel_dir in svg_dirs:
@@ -152,8 +153,8 @@ def update_readme_badge():
         f.write(new_content)
 
     # Calculate statistics
-    variants = 3  # hierarchical, monochrome, multicolor
-    colors = 2    # primary, secondary
+    variants = len(set(d.split('/')[0] for d in SVG_BASE_DIRS))  # hierarchical, monochrome, multicolor
+    colors = len(set(d.split('/')[1] for d in SVG_BASE_DIRS))    # primary, secondary
     per_variant = svg_count * colors
     total_svgs = svg_count * variants * colors
 
@@ -171,7 +172,7 @@ def main():
     parser = argparse.ArgumentParser(
         description="Extract individual SVG files from concatenated svgs.txt files.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=STRUCTURE_DIAGRAM
+        epilog=str(STRUCTURE_DIAGRAM)
     )
     parser.add_argument(
         "-c", "--check",
@@ -252,7 +253,7 @@ def main():
     print(f"{Colors.GREEN}✓{Colors.RESET} Loaded {Colors.BOLD}{len(names)}{Colors.RESET} names")
 
     # All svgs.txt paths (without names.txt)
-    svg_files = [f for f in REQUIRED_FILES if f != "names.txt"]
+    svg_files = [f"{d}/svgs.txt" for d in SVG_BASE_DIRS]
 
     for svg_file in svg_files:
         full_path = os.path.join(BASE_DIR, svg_file)
@@ -302,12 +303,16 @@ def main():
     print(f"\n{Colors.BOLD}{'─' * 50}{Colors.RESET}")
     print(f"{Colors.GREEN}{Colors.BOLD}All done!{Colors.RESET}")
     print(f"{Colors.BOLD}{'─' * 50}{Colors.RESET}")
-    print(f"  {Colors.CYAN}Duration:{Colors.RESET}    {format_duration(duration)}")
-    print(f"  {Colors.CYAN}Categories:{Colors.RESET}  {stats['processed']} processed, {stats['skipped']} skipped, {stats['warnings']} warnings")
-    print(f"  {Colors.CYAN}SVGs:{Colors.RESET}        {stats['total_svgs']:,} files written")
+    label_width = 22
+    print(f"  {Colors.CYAN}{'Duration:'.ljust(label_width)}{Colors.RESET} {format_duration(duration)}")
+    print(f"  {Colors.CYAN}{'Categories processed:'.ljust(label_width)}{Colors.RESET} {stats['processed']}/{len(svg_files)} ({stats['skipped']} skipped, {stats['warnings']} warnings)")
+    print(f"  {Colors.CYAN}{'Variants:'.ljust(label_width)}{Colors.RESET} {len(set(d.split('/')[0] for d in SVG_BASE_DIRS))} (hierarchical, monochrome, multicolor)")
+    print(f"  {Colors.CYAN}{'Colors:'.ljust(label_width)}{Colors.RESET} {len(set(d.split('/')[1] for d in SVG_BASE_DIRS))} (primary, secondary)")
+    print(f"  {Colors.CYAN}{'SVGs per category:'.ljust(label_width)}{Colors.RESET} {len(names)}")
+    print(f"  {Colors.CYAN}{'Total SVGs written:'.ljust(label_width)}{Colors.RESET} {stats['total_svgs']:,}")
     if stats["total_svgs"] > 0 and duration > 0:
         rate = stats["total_svgs"] / duration
-        print(f"  {Colors.CYAN}Speed:{Colors.RESET}       {rate:,.0f} files/sec")
+        print(f"  {Colors.CYAN}{'Processing rate:'.ljust(label_width)}{Colors.RESET} {rate:,.0f} SVGs/sec")
     print(f"{Colors.BOLD}{'─' * 50}{Colors.RESET}")
 
 
