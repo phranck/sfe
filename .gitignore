@@ -1,0 +1,15 @@
+# Extracted SVG files (run ./sfe to generate)
+*.svg
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Claude Code
+.claude/
+
+# GitHub Copilot
+.github/copilot-instructions.md
