@@ -14,35 +14,19 @@ Current version: **[SF Symbols 7.0](https://developer.apple.com/sf-symbols/)**
 sfe/
 ├── sfe                 # Extractor script
 ├── names.txt           # Symbol names (one per line)
-├── hierarchical/       # Hierarchical variant
-│   ├── primary/        # Primary color
-│   │   └── svgs.txt
-│   └── secondary/      # Secondary color
-│       └── svgs.txt
 ├── monochrome/         # Monochrome variant
-│   ├── primary/        # Primary color
-│   │   └── svgs.txt
-│   └── secondary/      # Secondary color
-│       └── svgs.txt
-└── multicolor/         # Multicolor variant
-    ├── primary/        # Primary color
-    │   └── svgs.txt
-    └── secondary/      # Secondary color
-        └── svgs.txt
+│   └── svgs.txt
+└── hierarchical/       # Hierarchical variant
+    └── svgs.txt
 ```
 
-## Symbol Variants & Colors
+## Symbol Variants
 
-The directories are organized by SF Symbol rendering variants and colors:
+The directories are organized by SF Symbol rendering variants:
 
 **Variants:**
-- `hierarchical/` - Hierarchical
 - `monochrome/` - Monochrome
-- `multicolor/` - Multicolor
-
-**Colors:**
-- `primary/` - Primary Color
-- `secondary/` - Secondary Color
+- `hierarchical/` - Hierarchical
 
 ## Usage
 

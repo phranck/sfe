@@ -20,12 +20,8 @@ class Colors:
 
 # Expected file structure
 SVG_BASE_DIRS = [
-    "hierarchical/primary",
-    "hierarchical/secondary",
-    "monochrome/primary",
-    "monochrome/secondary",
-    "multicolor/primary",
-    "multicolor/secondary",
+    "monochrome",
+    "hierarchical",
 ]
 
 REQUIRED_FILES = ["names.txt"] + [f"{d}/svgs.txt" for d in SVG_BASE_DIRS]
@@ -35,21 +31,10 @@ STRUCTURE_DIAGRAM = f"""
 
   {Colors.CYAN}<script-directory>/{Colors.RESET}
   ├── names.txt
-  ├── hierarchical/
-  │   ├── primary/
-  │   │   └── svgs.txt
-  │   └── secondary/
-  │       └── svgs.txt
   ├── monochrome/
-  │   ├── primary/
-  │   │   └── svgs.txt
-  │   └── secondary/
-  │       └── svgs.txt
-  └── multicolor/
-      ├── primary/
-      │   └── svgs.txt
-      └── secondary/
-          └── svgs.txt
+  │   └── svgs.txt
+  └── hierarchical/
+      └── svgs.txt
 """
 
 
@@ -153,8 +138,10 @@ def update_readme_badge():
         f.write(new_content)
 
     # Calculate statistics
-    variants = len(set(d.split('/')[0] for d in SVG_BASE_DIRS))  # hierarchical, monochrome, multicolor
-    colors = len(set(d.split('/')[1] for d in SVG_BASE_DIRS))    # primary, secondary
+    variants = len(SVG_BASE_DIRS)  # monochrome, hierarchical
+    colors = 1  # no color variants
+    per_variant = svg_count * colors
+    total_svgs = svg_count * variants * colors
     per_variant = svg_count * colors
     total_svgs = svg_count * variants * colors
 
@@ -306,8 +293,7 @@ def main():
     label_width = 22
     print(f"  {Colors.CYAN}{'Duration:'.ljust(label_width)}{Colors.RESET} {format_duration(duration)}")
     print(f"  {Colors.CYAN}{'Categories processed:'.ljust(label_width)}{Colors.RESET} {stats['processed']}/{len(svg_files)} ({stats['skipped']} skipped, {stats['warnings']} warnings)")
-    print(f"  {Colors.CYAN}{'Variants:'.ljust(label_width)}{Colors.RESET} {len(set(d.split('/')[0] for d in SVG_BASE_DIRS))} (hierarchical, monochrome, multicolor)")
-    print(f"  {Colors.CYAN}{'Colors:'.ljust(label_width)}{Colors.RESET} {len(set(d.split('/')[1] for d in SVG_BASE_DIRS))} (primary, secondary)")
+    print(f"  {Colors.CYAN}{'Variants:'.ljust(label_width)}{Colors.RESET} {len(SVG_BASE_DIRS)} (monochrome, hierarchical)")
     print(f"  {Colors.CYAN}{'SVGs per category:'.ljust(label_width)}{Colors.RESET} {len(names)}")
     print(f"  {Colors.CYAN}{'Total SVGs written:'.ljust(label_width)}{Colors.RESET} {stats['total_svgs']:,}")
     if stats["total_svgs"] > 0 and duration > 0:
