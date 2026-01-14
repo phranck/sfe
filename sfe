@@ -2,6 +2,7 @@
 import argparse
 import os
 import re
+import shutil
 import sys
 import time
 
@@ -24,13 +25,14 @@ SVG_BASE_DIRS = [
     "hierarchical",
 ]
 
-REQUIRED_FILES = ["names.txt"] + [f"{d}/svgs.txt" for d in SVG_BASE_DIRS]
+REQUIRED_FILES = ["names.txt", "info.txt"] + [f"{d}/svgs.txt" for d in SVG_BASE_DIRS]
 
 STRUCTURE_DIAGRAM = f"""
 {Colors.BOLD}Expected directory structure:{Colors.RESET}
 
   {Colors.CYAN}<script-directory>/{Colors.RESET}
   ├── names.txt
+  ├── info.txt
   ├── monochrome/
   │   └── svgs.txt
   └── hierarchical/
@@ -219,6 +221,12 @@ def main():
         output_base = os.path.expanduser(args.output)
         os.makedirs(output_base, exist_ok=True)
         print(f"{Colors.GREEN}✓{Colors.RESET} Output directory: {Colors.BOLD}{output_base}{Colors.RESET}")
+        
+        # Copy info.txt to output directory
+        info_src = os.path.join(BASE_DIR, "info.txt")
+        info_dst = os.path.join(output_base, "info.txt")
+        shutil.copy2(info_src, info_dst)
+        print(f"{Colors.GREEN}✓{Colors.RESET} Copied info.txt to output directory")
     else:
         output_base = BASE_DIR
 

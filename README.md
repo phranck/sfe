@@ -14,6 +14,7 @@ Current version: **[SF Symbols 7.0](https://developer.apple.com/sf-symbols/)**
 sfe/
 ├── sfe                 # Extractor script
 ├── names.txt           # Symbol names (one per line)
+├── info.txt            # Special Symbol info (one per line)
 ├── monochrome/         # Monochrome variant
 │   └── svgs.txt
 └── hierarchical/       # Hierarchical variant
