@@ -337,12 +337,6 @@ def main():
         output_base = os.path.expanduser(args.output)
         os.makedirs(output_base, exist_ok=True)
         print(f"{Colors.GREEN}✓{Colors.RESET} Output directory: {Colors.BOLD}{output_base}{Colors.RESET}")
-        
-        # Copy info.txt to output directory
-        info_src = os.path.join(BASE_DIR, "info.txt")
-        info_dst = os.path.join(output_base, "info.txt")
-        shutil.copy2(info_src, info_dst)
-        print(f"{Colors.GREEN}✓{Colors.RESET} Copied info.txt to output directory")
     else:
         output_base = BASE_DIR
 
