@@ -20,6 +20,9 @@ None
 - Embedded comprehensive metadata in exported SVGs (Apple name, Lib name, restricted flag, categories)
 - Reorganized data files into .data/ directory structure
 - Added 30 category mapping files from SF Symbols app
+- Released v1.1.0 with embedded metadata feature
+- Removed info.txt export (data now in SVG metadata)
+- Added --version/-v flag
 
 ## Notes
 - Homebrew formula uses system Python to avoid unnecessary dependencies

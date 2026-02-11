@@ -114,6 +114,7 @@ Each exported SVG contains:
 ### CLI Argument Pattern
 
 ```python
+parser.add_argument("-v", "--version", action="version", version=f"sfe {VERSION}")
 parser.add_argument("-c", "--check", action="store_true")
 parser.add_argument("-o", "--output", metavar="PATH")
 parser.add_argument("--clean", nargs="?", const=BASE_DIR)
@@ -131,16 +132,15 @@ Uses ANSI codes via `Colors` class:
 ## Current State
 
 **Branch:** main  
-**Version:** v1.0.1  
+**Version:** v1.1.0  
 **SF Symbols:** 7.2 (7007 symbols, 30 categories, 574 restricted)
 
 ### Recent Changes
+- Released v1.1.0 with embedded metadata feature
+- Added --version/-v flag (displays "sfe 1.1.0")
+- Removed info.txt export (data now in SVG metadata)
 - Embedded comprehensive metadata in exported SVGs (Apple name, Lib name, restricted flag, categories)
 - Reorganized data files into .data/ directory structure
-- Added 30 category mapping files from SF Symbols app
-- Fixed badge auto-update to read from names.txt
-- Added GitHub Action for automatic badge updates
-- Homebrew installation without Python dependency
 
 ### Known Issues
 None
