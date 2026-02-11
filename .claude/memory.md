@@ -3,22 +3,24 @@
 ## Project Overview
 
 **Name:** sfe (SF Symbols Extractor)  
-**Purpose:** Extract individual SVG files from concatenated SF Symbols svgs.txt files  
+**Purpose:** Extract individual SVG files with embedded metadata from concatenated SF Symbols svgs.txt files  
 **Language:** Python 3  
 **Type:** CLI tool
 
 ### Package Structure
 ```
 sfe/
-├── sfe                    # Main executable script
-├── sfe_main.py           # Pip-installable entry point (same as sfe)
-├── names.txt             # Symbol names (6984 entries)
-├── info.txt              # Special symbol metadata
-├── hierarchical/svgs.txt # Hierarchical variant (concatenated)
-├── monochrome/svgs.txt   # Monochrome variant (concatenated)
-├── pyproject.toml        # Python package metadata
-├── setup.py              # Data files installation
-└── homebrew/sfe.rb       # Homebrew formula
+├── sfe                      # Main executable script
+├── sfe_main.py             # Pip-installable entry point (same as sfe)
+├── .data/
+│   ├── names.txt           # Symbol names (7007 entries)
+│   ├── info.txt            # Restricted symbols (574 entries)
+│   ├── categories/         # Category mappings (30 files)
+│   ├── hierarchical/svgs.txt
+│   └── monochrome/svgs.txt
+├── pyproject.toml          # Python package metadata
+├── setup.py                # Data files installation
+└── homebrew/sfe.rb         # Homebrew formula
 ```
 
 ### Key Dependencies
@@ -30,8 +32,12 @@ None (Python standard library only)
 
 | Component | File | Purpose |
 |-----------|------|---------|
-| `get_base_dir()` | sfe, sfe_main.py | Detect data files location (source/brew/pip) |
+| `get_base_dir()` | sfe, sfe_main.py | Detect data files location (.data/source/brew/pip) |
 | `check_structure()` | sfe, sfe_main.py | Validate required files exist |
+| `load_categories()` | sfe, sfe_main.py | Load category mappings from .data/categories/*.txt |
+| `load_restricted_symbols()` | sfe, sfe_main.py | Load restricted symbols from .data/info.txt |
+| `generate_lib_name()` | sfe, sfe_main.py | Generate SF Symbols Lib name (PascalCase + SF prefix) |
+| `create_metadata_element()` | sfe, sfe_main.py | Generate SVG <metadata> XML element |
 | `clean_svgs()` | sfe, sfe_main.py | Delete extracted SVG files |
 | `update_readme_badge()` | sfe, sfe_main.py | Update README with SVG count |
 | `main()` | sfe, sfe_main.py | CLI entry point and orchestration |
@@ -39,16 +45,18 @@ None (Python standard library only)
 ### Data Flow
 
 1. **Initialization:** Detect BASE_DIR based on installation method
-2. **Validation:** Check for required files (names.txt, info.txt, */svgs.txt)
-3. **Extraction:** Split concatenated SVGs by `<?xml` delimiter
-4. **Naming:** Match SVGs to names from names.txt (1:1 mapping)
-5. **Output:** Write individual .svg files to variant directories
+2. **Validation:** Check for required files (.data/names.txt, .data/info.txt, .data/*/svgs.txt)
+3. **Load Metadata Sources:** Categories (30 files), restricted symbols (574), names (7007)
+4. **Extraction:** Split concatenated SVGs by `<?xml` delimiter
+5. **Metadata Generation:** Create <metadata> element with Apple name, Lib name, restricted flag, categories
+6. **Metadata Injection:** Insert <metadata> after opening <svg> tag
+7. **Output:** Write individual .svg files with embedded metadata to variant directories
 
 ### Installation Paths
 
 | Method | Script Location | Data Location |
 |--------|----------------|---------------|
-| Source | `./sfe` | `./*` (same dir) |
+| Source | `./sfe` | `./.data/` |
 | Homebrew | `/opt/homebrew/bin/sfe` | `/opt/homebrew/share/sfe/` |
 | pip/pipx | `{prefix}/bin/sfe` | `{prefix}/share/sfe/` |
 
@@ -56,7 +64,11 @@ None (Python standard library only)
 
 | Function | Purpose | Key Logic |
 |----------|---------|-----------|
-| `get_base_dir()` | Find data files | Checks: source dir → brew share → pip share |
+| `get_base_dir()` | Find data files | Checks: .data/ → source dir → brew share → pip share |
+| `load_categories()` | Load category mappings | Reads .data/categories/*.txt, returns {symbol: [categories]} |
+| `load_restricted_symbols()` | Load restricted symbols | Reads .data/info.txt, returns set of symbol names |
+| `generate_lib_name()` | Generate Lib name | Split by `.`, capitalize words, join, add `SF` prefix |
+| `create_metadata_element()` | Create SVG metadata | Generates <metadata><symbol>...</symbol></metadata> XML |
 | `check_structure()` | Validate setup | Returns missing files list |
 | `print_progress()` | Progress bar | Updates in-place with `\r` |
 | `format_duration()` | Human-readable time | ms/s/m format |
@@ -75,8 +87,29 @@ None (Python standard library only)
 ### Data File Format
 
 - **names.txt:** One symbol name per line (no extension)
-- **info.txt:** Special symbol metadata (one per line)
+- **info.txt:** Restricted symbol names (one per line)
+- **categories/*.txt:** Symbol names per category (filename = category name)
 - **svgs.txt:** Concatenated SVGs, split by `<?xml version="1.0" encoding="UTF-8"?>`
+
+### SVG Metadata Format
+
+Each exported SVG contains:
+```xml
+<metadata>
+  <symbol>
+    <name type="apple">square.and.arrow.up</name>
+    <name type="lib">SFSquareAndArrowUp</name>
+    <restricted>false</restricted>
+    <categories>
+      <category>Draw</category>
+    </categories>
+  </symbol>
+</metadata>
+```
+
+- Metadata inserted after opening `<svg>` tag
+- Categories alphabetically sorted, optional
+- Lib name: PascalCase conversion of Apple name with `SF` prefix
 
 ### CLI Argument Pattern
 
@@ -99,16 +132,15 @@ Uses ANSI codes via `Colors` class:
 
 **Branch:** main  
 **Version:** v1.0.1  
-**SF Symbols:** 7.2 (7007 symbols)
+**SF Symbols:** 7.2 (7007 symbols, 30 categories, 574 restricted)
 
 ### Recent Changes
-- Fixed badge auto-update to read from names.txt instead of extracted SVGs
-- Corrected symbol count from 6984 to 7007
+- Embedded comprehensive metadata in exported SVGs (Apple name, Lib name, restricted flag, categories)
+- Reorganized data files into .data/ directory structure
+- Added 30 category mapping files from SF Symbols app
+- Fixed badge auto-update to read from names.txt
 - Added GitHub Action for automatic badge updates
-- Added project tracking files (whats-next, to-dos, memory)
-- Documented sf-symbols-lib usage relationship
 - Homebrew installation without Python dependency
-- Smart BASE_DIR detection for all install methods
 
 ### Known Issues
 None

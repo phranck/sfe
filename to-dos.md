@@ -17,6 +17,9 @@ None
 - Added GitHub Action for automatic badge updates on names.txt changes
 - Added project tracking files (whats-next.md, to-dos.md, memory.md)
 - Documented sf-symbols-lib usage relationship
+- Embedded comprehensive metadata in exported SVGs (Apple name, Lib name, restricted flag, categories)
+- Reorganized data files into .data/ directory structure
+- Added 30 category mapping files from SF Symbols app
 
 ## Notes
 - Homebrew formula uses system Python to avoid unnecessary dependencies
@@ -24,5 +27,6 @@ None
 - Script detects installation method and locates data files accordingly
 - Badge auto-updates via GitHub Action when names.txt changes
 - Extracted SVGs used directly by sf-symbols-lib project
+- Each SVG is self-describing with W3C standard <metadata> tags
 
 **Last Updated:** 2026-02-11

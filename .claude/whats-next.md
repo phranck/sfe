@@ -3,7 +3,7 @@
 **Branch:** main  
 **Tests:** N/A (no test suite)  
 **Build:** Passing (Python script)  
-**Symbol Count:** 7007 (auto-updated from names.txt)
+**Symbol Count:** 7007 (30 categories, 574 restricted)
 
 ## Active Task
 None
