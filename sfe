@@ -494,10 +494,17 @@ def main():
     print(f"{Colors.GREEN}{Colors.BOLD}All done!{Colors.RESET}")
     print(f"{Colors.BOLD}{'─' * 50}{Colors.RESET}")
     label_width = 22
+    
+    # Count unique categories across all symbols
+    unique_categories = set()
+    for cats in symbol_categories.values():
+        unique_categories.update(cats)
+    
     print(f"  {Colors.CYAN}{'Duration:'.ljust(label_width)}{Colors.RESET} {format_duration(duration)}")
-    print(f"  {Colors.CYAN}{'Categories processed:'.ljust(label_width)}{Colors.RESET} {stats['processed']}/{len(svg_files)} ({stats['skipped']} skipped, {stats['warnings']} warnings)")
-    print(f"  {Colors.CYAN}{'Rendering modes:'.ljust(label_width)}{Colors.RESET} {len(SVG_BASE_DIRS)} (monochrome, hierarchical, palette, multicolor)")
-    print(f"  {Colors.CYAN}{'SVGs per category:'.ljust(label_width)}{Colors.RESET} {len(names)}")
+    print(f"  {Colors.CYAN}{'Rendering modes:'.ljust(label_width)}{Colors.RESET} {stats['processed']}/{len(svg_files)} ({stats['skipped']} skipped, {stats['warnings']} warnings)")
+    print(f"  {Colors.CYAN}{'Total symbols:'.ljust(label_width)}{Colors.RESET} {len(names)}")
+    print(f"  {Colors.CYAN}{'Categories:'.ljust(label_width)}{Colors.RESET} {len(unique_categories)}")
+    print(f"  {Colors.CYAN}{'Restricted symbols:'.ljust(label_width)}{Colors.RESET} {len(restricted_symbols)}")
     print(f"  {Colors.CYAN}{'Total SVGs written:'.ljust(label_width)}{Colors.RESET} {stats['total_svgs']:,}")
     if stats["total_svgs"] > 0 and duration > 0:
         rate = stats["total_svgs"] / duration
