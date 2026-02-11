@@ -8,9 +8,9 @@ A Python tool to extract individual SVG files from concatenated `svgs.txt` files
 
 Current version: **[SF Symbols 7.2](https://developer.apple.com/sf-symbols/)**
 
-## Data Source
+## Usage in Projects
 
-The data files (`names.txt`, `info.txt`, `svgs.txt`) in this repository are generated directly from [sf-symbols-lib](https://github.com/phranck/sf-symbols-lib).
+The extracted SVG files are used directly by [sf-symbols-lib](https://github.com/phranck/sf-symbols-lib).
 
 ## Directory Structure
 
