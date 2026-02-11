@@ -11,8 +11,8 @@ build/
 dist/
 *.egg-info/
 
-# Claude Code
-.claude/
+# Claude Code (allow project tracking)
+.claude/claude_desktop_config.json
 
 # GitHub Copilot
 .github/copilot-instructions.md
