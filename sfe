@@ -6,6 +6,8 @@ import shutil
 import sys
 import time
 
+VERSION = "1.1.0"
+
 # Determine base directory for data files
 def get_base_dir():
     """Find the base directory containing data files."""
@@ -278,6 +280,11 @@ def main():
         description="Extract individual SVG files from concatenated svgs.txt files.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=str(STRUCTURE_DIAGRAM)
+    )
+    parser.add_argument(
+        "-v", "--version",
+        action="version",
+        version=f"sfe {VERSION}"
     )
     parser.add_argument(
         "-c", "--check",
