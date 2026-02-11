@@ -6,7 +6,7 @@ import shutil
 import sys
 import time
 
-VERSION = "1.2.1"
+VERSION = "1.3.0"
 SF_SYMBOLS_VERSION = "7.3"
 
 # Determine base directory for data files
@@ -59,9 +59,7 @@ class Colors:
 # Expected file structure
 SVG_BASE_DIRS = [
     "monochrome",
-    "hierarchical",
-    "palette",
-    "multicolor",
+    "dualtone",
 ]
 
 REQUIRED_FILES = ["names.txt", "info.txt"] + [f"{d}/svgs.txt" for d in SVG_BASE_DIRS]
@@ -74,11 +72,7 @@ STRUCTURE_DIAGRAM = f"""
   ├── info.txt
   ├── monochrome/
   │   └── svgs.txt
-  ├── hierarchical/
-  │   └── svgs.txt
-  ├── palette/
-  │   └── svgs.txt
-  └── multicolor/
+  └── dualtone/
       └── svgs.txt
 """
 
@@ -267,7 +261,7 @@ def update_readme_badge():
         f.write(new_content)
 
     # Calculate statistics
-    variants = len(SVG_BASE_DIRS)  # monochrome, hierarchical
+    variants = len(SVG_BASE_DIRS)  # monochrome, dualtone
     colors = 1  # no color variants
     per_variant = svg_count * colors
     total_svgs = svg_count * variants * colors
@@ -460,7 +454,7 @@ def main():
             # Generate metadata for this symbol
             lib_name = generate_lib_name(name)
             is_restricted = name in restricted_symbols
-            rendering_mode = rel_dir  # monochrome, hierarchical, palette, multicolor
+            rendering_mode = rel_dir  # monochrome, dualtone
             categories = symbol_categories.get(name, [])
             
             # Create metadata element

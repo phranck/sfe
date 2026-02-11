@@ -10,9 +10,7 @@ class Sfe < Formula
     (share/"sfe").install ".data/names.txt", ".data/info.txt"
     (share/"sfe"/"categories").install Dir[".data/categories/*.txt"]
     (share/"sfe"/"monochrome").install ".data/monochrome/svgs.txt"
-    (share/"sfe"/"hierarchical").install ".data/hierarchical/svgs.txt"
-    (share/"sfe"/"palette").install ".data/palette/svgs.txt"
-    (share/"sfe"/"multicolor").install ".data/multicolor/svgs.txt"
+    (share/"sfe"/"dualtone").install ".data/dualtone/svgs.txt"
   end
 
   test do

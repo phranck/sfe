@@ -17,9 +17,7 @@ sfe/
 │   ├── info.txt            # Restricted symbols (574 entries)
 │   ├── categories/         # Category mappings (30 files)
 │   ├── monochrome/svgs.txt # Monochrome rendering mode
-│   ├── hierarchical/svgs.txt # Hierarchical rendering mode
-│   ├── palette/svgs.txt    # Palette rendering mode
-│   └── multicolor/svgs.txt # Multicolor rendering mode
+│   └── dualtone/svgs.txt   # Dualtone rendering mode
 ├── pyproject.toml          # Python package metadata
 ├── setup.py                # Data files installation
 └── homebrew/sfe.rb         # Homebrew formula
@@ -114,7 +112,7 @@ Each exported SVG contains:
 ```
 
 - Metadata inserted after opening `<svg>` tag
-- Rendering mode: monochrome, hierarchical, palette, multicolor
+- Rendering mode: monochrome, dualtone
 - SF Symbols version included (7.3)
 - Categories alphabetically sorted, optional
 - Lib name: PascalCase conversion of Apple name with `SF` prefix
@@ -140,16 +138,16 @@ Uses ANSI codes via `Colors` class:
 ## Current State
 
 **Branch:** main  
-**Version:** v1.2.1  
-**SF Symbols:** 7.3 (7007 symbols, 30 categories, 574 restricted, 4 rendering modes)
+**Version:** v1.3.0  
+**SF Symbols:** 7.3 (7007 symbols, 30 categories, 574 restricted, 2 rendering modes)
 
 ### Recent Changes
 - Released v1.2.1 with improved statistics output
-- Added palette and multicolor rendering modes (4 total)
 - Added interactive output directory handling (delete/merge/cancel)
 - Default output to ./svgs directory
 - SF Symbols version and rendering mode in metadata
 - Statistics now show all 30 categories
+- Reduced to 2 rendering modes (monochrome, dualtone), renamed hierarchical to dualtone
 
 ### Known Issues
 None

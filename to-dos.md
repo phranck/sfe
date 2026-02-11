@@ -24,7 +24,7 @@ None
 - Removed info.txt export (data now in SVG metadata)
 - Added --version/-v flag
 - Updated to SF Symbols 7.3 with version in metadata
-- Added palette and multicolor rendering modes (4 total)
+- Added rendering modes (reduced to monochrome + dualtone)
 - Added interactive output directory handling (delete/merge/cancel)
 - Released v1.2.0 and v1.2.1
 - Improved statistics output clarity (30 categories now visible)
@@ -37,6 +37,6 @@ None
 - Extracted SVGs used directly by sf-symbols-lib project
 - Each SVG is self-describing with W3C standard <metadata> tags
 - Default output to ./svgs directory with interactive prompts
-- 4 rendering modes: monochrome, hierarchical, palette, multicolor
+- 2 rendering modes: monochrome, dualtone
 
 **Last Updated:** 2026-02-11

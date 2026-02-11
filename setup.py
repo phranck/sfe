@@ -12,7 +12,7 @@ def get_data_files():
     data_files.append(('share/sfe', base_files))
     
     # Variant directories with svgs.txt
-    for variant in ['monochrome', 'hierarchical']:
+    for variant in ['monochrome', 'dualtone']:
         variant_file = os.path.join(variant, 'svgs.txt')
         if os.path.exists(variant_file):
             data_files.append((f'share/sfe/{variant}', [variant_file]))

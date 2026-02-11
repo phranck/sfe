@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sfe"
-version = "1.0.0"
+version = "1.3.0"
 description = "SF Symbols Extractor - Extract individual SVG files from concatenated svgs.txt files"
 readme = "README.md"
 requires-python = ">=3.7"
