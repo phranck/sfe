@@ -4,7 +4,7 @@ class Sfe < Formula
   desc "SF Symbols Extractor - Extract individual SVG files from SF Symbols 7.2"
   homepage "https://github.com/phranck/sfe"
   url "https://github.com/phranck/sfe/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+  sha256 "3774b05ad4c1ea0e132a34a55c17b05b0956417524d871fd038fad725880fd2a"
   license "MIT"
 
   depends_on "python@3.13"
