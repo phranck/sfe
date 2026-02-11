@@ -99,17 +99,23 @@ Uses ANSI codes via `Colors` class:
 
 **Branch:** main  
 **Version:** v1.0.1  
-**SF Symbols:** 7.2 (6984 symbols)
+**SF Symbols:** 7.2 (7007 symbols)
 
 ### Recent Changes
-- Added Homebrew installation without Python dependency
-- Implemented smart BASE_DIR detection for all install methods
-- Removed virtualenv from Homebrew formula (uses system Python)
-- Data files now install to share/sfe/ directory
-- Changed license to MIT
+- Fixed badge auto-update to read from names.txt instead of extracted SVGs
+- Corrected symbol count from 6984 to 7007
+- Added GitHub Action for automatic badge updates
+- Added project tracking files (whats-next, to-dos, memory)
+- Documented sf-symbols-lib usage relationship
+- Homebrew installation without Python dependency
+- Smart BASE_DIR detection for all install methods
 
 ### Known Issues
 None
+
+### Automation
+- GitHub Action updates README badge when names.txt changes
+- `./sfe --update-badge` works without extracting SVGs first
 
 ### Package Distribution
 
