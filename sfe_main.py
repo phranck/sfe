@@ -60,6 +60,8 @@ class Colors:
 SVG_BASE_DIRS = [
     "monochrome",
     "hierarchical",
+    "palette",
+    "multicolor",
 ]
 
 REQUIRED_FILES = ["names.txt", "info.txt"] + [f"{d}/svgs.txt" for d in SVG_BASE_DIRS]
@@ -72,7 +74,11 @@ STRUCTURE_DIAGRAM = f"""
   ├── info.txt
   ├── monochrome/
   │   └── svgs.txt
-  └── hierarchical/
+  ├── hierarchical/
+  │   └── svgs.txt
+  ├── palette/
+  │   └── svgs.txt
+  └── multicolor/
       └── svgs.txt
 """
 
@@ -200,7 +206,7 @@ def load_restricted_symbols():
     return restricted
 
 
-def create_metadata_element(apple_name, lib_name, is_restricted, categories):
+def create_metadata_element(apple_name, lib_name, is_restricted, rendering_mode, categories):
     """Create an SVG metadata element with symbol information.
     Returns the metadata XML string.
     """
@@ -210,6 +216,7 @@ def create_metadata_element(apple_name, lib_name, is_restricted, categories):
         f"      <name type=\"apple\">{apple_name}</name>",
         f"      <name type=\"lib\">{lib_name}</name>",
         f"      <restricted>{str(is_restricted).lower()}</restricted>",
+        f"      <renderingMode>{rendering_mode}</renderingMode>",
         f"      <sfSymbolsVersion>{SF_SYMBOLS_VERSION}</sfSymbolsVersion>",
     ]
     
@@ -413,10 +420,11 @@ def main():
             # Generate metadata for this symbol
             lib_name = generate_lib_name(name)
             is_restricted = name in restricted_symbols
+            rendering_mode = rel_dir  # monochrome, hierarchical, palette, multicolor
             categories = symbol_categories.get(name, [])
             
             # Create metadata element
-            metadata = create_metadata_element(name, lib_name, is_restricted, categories)
+            metadata = create_metadata_element(name, lib_name, is_restricted, rendering_mode, categories)
             
             # Insert metadata after the opening <svg> tag
             svg_start = svg_content.find('<svg')
@@ -448,7 +456,7 @@ def main():
     label_width = 22
     print(f"  {Colors.CYAN}{'Duration:'.ljust(label_width)}{Colors.RESET} {format_duration(duration)}")
     print(f"  {Colors.CYAN}{'Categories processed:'.ljust(label_width)}{Colors.RESET} {stats['processed']}/{len(svg_files)} ({stats['skipped']} skipped, {stats['warnings']} warnings)")
-    print(f"  {Colors.CYAN}{'Variants:'.ljust(label_width)}{Colors.RESET} {len(SVG_BASE_DIRS)} (monochrome, hierarchical)")
+    print(f"  {Colors.CYAN}{'Rendering modes:'.ljust(label_width)}{Colors.RESET} {len(SVG_BASE_DIRS)} (monochrome, hierarchical, palette, multicolor)")
     print(f"  {Colors.CYAN}{'SVGs per category:'.ljust(label_width)}{Colors.RESET} {len(names)}")
     print(f"  {Colors.CYAN}{'Total SVGs written:'.ljust(label_width)}{Colors.RESET} {stats['total_svgs']:,}")
     if stats["total_svgs"] > 0 and duration > 0:
