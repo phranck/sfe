@@ -6,7 +6,7 @@
 
 A Python tool to extract individual SVG files from concatenated `svgs.txt` files.
 
-Current version: **[SF Symbols 7.2](https://developer.apple.com/sf-symbols/)**
+Current version: **[SF Symbols 7.3](https://developer.apple.com/sf-symbols/)**
 
 ## Usage in Projects
 
@@ -131,6 +131,7 @@ Each extracted SVG file contains embedded metadata in standard SVG `<metadata>` 
       <name type="apple">square.and.arrow.up</name>
       <name type="lib">SFSquareAndArrowUp</name>
       <restricted>false</restricted>
+      <sfSymbolsVersion>7.3</sfSymbolsVersion>
       <categories>
         <category>Draw</category>
         <category>Navigation</category>
@@ -148,6 +149,7 @@ Each extracted SVG file contains embedded metadata in standard SVG `<metadata>` 
 | `<name type="apple">` | Original Apple symbol name | `square.and.arrow.up` |
 | `<name type="lib">` | SF Symbols Lib compatible name (PascalCase with `SF` prefix) | `SFSquareAndArrowUp` |
 | `<restricted>` | Whether symbol has Apple usage restrictions | `true` or `false` |
+| `<sfSymbolsVersion>` | SF Symbols version these symbols are from | `7.3` |
 | `<categories>` | Apple SF Symbols app categories (alphabetically sorted, optional) | `<category>Draw</category>` |
 
 ### Name Conversion Rules

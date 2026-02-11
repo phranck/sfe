@@ -7,6 +7,7 @@ import sys
 import time
 
 VERSION = "1.1.0"
+SF_SYMBOLS_VERSION = "7.3"
 
 # Determine base directory for data files
 def get_base_dir():
@@ -209,6 +210,7 @@ def create_metadata_element(apple_name, lib_name, is_restricted, categories):
         f"      <name type=\"apple\">{apple_name}</name>",
         f"      <name type=\"lib\">{lib_name}</name>",
         f"      <restricted>{str(is_restricted).lower()}</restricted>",
+        f"      <sfSymbolsVersion>{SF_SYMBOLS_VERSION}</sfSymbolsVersion>",
     ]
     
     if categories:

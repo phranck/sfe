@@ -100,6 +100,7 @@ Each exported SVG contains:
     <name type="apple">square.and.arrow.up</name>
     <name type="lib">SFSquareAndArrowUp</name>
     <restricted>false</restricted>
+    <sfSymbolsVersion>7.3</sfSymbolsVersion>
     <categories>
       <category>Draw</category>
     </categories>
@@ -108,6 +109,7 @@ Each exported SVG contains:
 ```
 
 - Metadata inserted after opening `<svg>` tag
+- SF Symbols version included (7.3)
 - Categories alphabetically sorted, optional
 - Lib name: PascalCase conversion of Apple name with `SF` prefix
 
@@ -133,7 +135,7 @@ Uses ANSI codes via `Colors` class:
 
 **Branch:** main  
 **Version:** v1.1.0  
-**SF Symbols:** 7.2 (7007 symbols, 30 categories, 574 restricted)
+**SF Symbols:** 7.3 (7007 symbols, 30 categories, 574 restricted)
 
 ### Recent Changes
 - Released v1.1.0 with embedded metadata feature
