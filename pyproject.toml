@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sfe"
+version = "1.0.0"
+description = "SF Symbols Extractor - Extract individual SVG files from concatenated svgs.txt files"
+readme = "README.md"
+requires-python = ">=3.7"
+license = "MIT"
+authors = [
+    {name = "Frank Gregor", email = "phranck@users.noreply.github.com"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[project.scripts]
+sfe = "sfe_main:main"
+
+[project.urls]
+Homepage = "https://github.com/phranck/sfe"
+
+[tool.setuptools]
+py-modules = ["sfe_main"]
+
+[tool.setuptools.package-data]
+"*" = ["*.txt"]

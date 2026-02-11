@@ -1,6 +1,6 @@
 [![Mastodon: @phranck](https://img.shields.io/badge/Mastodon-@LAYERED-6364ff.svg?style=flat)](https://oldbytes.space/@LAYERED)
 ![SF Symbols](https://img.shields.io/badge/SF%20Symbols-6984-blue?style=flat&logo=apple&logoColor=white)
-[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # sfe - SF Symbols Extractor
 
@@ -29,33 +29,72 @@ The directories are organized by SF Symbol rendering variants:
 - `monochrome/` - Monochrome
 - `hierarchical/` - Hierarchical
 
+## Installation
+
+Install `sfe` globally on your system using `pipx` (recommended) or `pip`:
+
+### Using pipx (Recommended)
+
+```bash
+# Install pipx if not already installed
+brew install pipx
+
+# Install sfe from source directory
+pipx install .
+
+# Or install in editable mode (changes reflect immediately)
+pipx install -e .
+```
+
+### Using pip with virtual environment
+
+```bash
+# Install from source directory
+pip install .
+
+# Or install in development mode (changes reflect immediately)
+pip install -e .
+```
+
+After installation, the `sfe` command is available globally in your terminal.
+
+### Uninstall
+
+```bash
+# If installed with pipx
+pipx uninstall sfe
+
+# If installed with pip
+pip uninstall sfe
+```
+
 ## Usage
 
 ```bash
 # Check directory structure
-./sfe --check | -c
+sfe --check
 
 # Update SF Symbols badge in README
-./sfe --update-badge | -u
+sfe --update-badge
 
 # Extract SVGs to custom directory (preserves directory structure)
-./sfe --output ~/Desktop/SVGs | -o ~/Desktop/SVGs
+sfe --output ~/Desktop/SVGs
 
 # Delete all extracted SVGs (current directory)
-./sfe --clean
+sfe --clean
 
 # Delete all extracted SVGs (custom directory)
-./sfe --clean ~/Desktop/SVGs
+sfe --clean ~/Desktop/SVGs
 
 # Extract all SVGs
-./sfe
+sfe
 ```
 
 The script extracts individual `.svg` files from each `svgs.txt` into their respective directories.
 
 ## Note
 
-The extracted `.svg` files are excluded from version control (see `.gitignore`). Run `./sfe` after cloning to generate them.
+The extracted `.svg` files are excluded from version control (see `.gitignore`). After cloning the repository, install it with `pip install .` and then run `sfe` to generate the SVG files.
 
 ## Contributing
 
@@ -63,4 +102,4 @@ Reports and pull requests are welcome. Please use the GitHub issue tracker for b
 
 ## License
 
-This repository has been published under the [CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+This repository has been published under the [MIT](https://opensource.org/licenses/MIT) license.
