@@ -11,7 +11,12 @@ def get_base_dir():
     """Find the base directory containing data files."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # Check if running from source directory
+    # Check if running from source directory with .data/ subdirectory
+    data_subdir = os.path.join(script_dir, '.data')
+    if os.path.exists(os.path.join(data_subdir, 'names.txt')):
+        return data_subdir
+    
+    # Check if running from source directory (old structure)
     if os.path.exists(os.path.join(script_dir, 'names.txt')):
         return script_dir
     
@@ -137,6 +142,85 @@ def clean_svgs(base_path):
             print(f"  {Colors.GREEN}✓{Colors.RESET} {rel_dir}: {len(svg_files)} files deleted")
 
     return total_deleted
+
+
+def load_categories():
+    """Load category mappings from categories/*.txt files.
+    Returns a dictionary mapping symbol names to lists of categories.
+    """
+    categories_dir = os.path.join(BASE_DIR, "categories")
+    symbol_categories = {}
+    
+    if not os.path.exists(categories_dir):
+        return symbol_categories
+    
+    category_files = [f for f in os.listdir(categories_dir) if f.endswith(".txt")]
+    
+    for category_file in category_files:
+        # Category name is the filename without extension
+        category_name = os.path.splitext(category_file)[0]
+        category_path = os.path.join(categories_dir, category_file)
+        
+        with open(category_path, "r") as f:
+            symbol_names = [line.strip() for line in f if line.strip()]
+        
+        for symbol_name in symbol_names:
+            if symbol_name not in symbol_categories:
+                symbol_categories[symbol_name] = []
+            symbol_categories[symbol_name].append(category_name)
+    
+    return symbol_categories
+
+
+def generate_lib_name(apple_name):
+    """Generate SF Symbols Lib name from Apple symbol name.
+    Example: square.and.arrow.up -> SFSquareAndArrowUp
+    """
+    parts = apple_name.split('.')
+    pascal_case = ''.join(word.capitalize() for word in parts)
+    return f'SF{pascal_case}'
+
+
+def load_restricted_symbols():
+    """Load list of restricted symbol names from info.txt.
+    Returns a set of restricted symbol names.
+    """
+    info_file = os.path.join(BASE_DIR, "info.txt")
+    restricted = set()
+    
+    if not os.path.exists(info_file):
+        return restricted
+    
+    with open(info_file, "r") as f:
+        restricted = {line.strip() for line in f if line.strip()}
+    
+    return restricted
+
+
+def create_metadata_element(apple_name, lib_name, is_restricted, categories):
+    """Create an SVG metadata element with symbol information.
+    Returns the metadata XML string.
+    """
+    metadata_lines = [
+        "  <metadata>",
+        "    <symbol>",
+        f"      <name type=\"apple\">{apple_name}</name>",
+        f"      <name type=\"lib\">{lib_name}</name>",
+        f"      <restricted>{str(is_restricted).lower()}</restricted>",
+    ]
+    
+    if categories:
+        metadata_lines.append("      <categories>")
+        for category in sorted(categories):
+            metadata_lines.append(f"        <category>{category}</category>")
+        metadata_lines.append("      </categories>")
+    
+    metadata_lines.extend([
+        "    </symbol>",
+        "  </metadata>"
+    ])
+    
+    return "\n".join(metadata_lines)
 
 
 def update_readme_badge():
@@ -279,6 +363,19 @@ def main():
 
     print(f"{Colors.GREEN}✓{Colors.RESET} Loaded {Colors.BOLD}{len(names)}{Colors.RESET} names")
 
+    # Load category mappings
+    symbol_categories = load_categories()
+    if symbol_categories:
+        total_mappings = sum(len(cats) for cats in symbol_categories.values())
+        print(f"{Colors.GREEN}✓{Colors.RESET} Loaded {Colors.BOLD}{len(symbol_categories)}{Colors.RESET} symbols with categories ({total_mappings} total mappings)")
+    else:
+        print(f"{Colors.YELLOW}⊘{Colors.RESET} No category data found")
+    
+    # Load restricted symbols
+    restricted_symbols = load_restricted_symbols()
+    if restricted_symbols:
+        print(f"{Colors.GREEN}✓{Colors.RESET} Loaded {Colors.BOLD}{len(restricted_symbols)}{Colors.RESET} restricted symbols")
+
     # All svgs.txt paths (without names.txt)
     svg_files = [f"{d}/svgs.txt" for d in SVG_BASE_DIRS]
 
@@ -310,8 +407,23 @@ def main():
             continue
 
         for i, (name, svg_content) in enumerate(zip(names, svgs)):
-            # Reconstruct full SVG with XML declaration
-            full_svg = '<?xml version="1.0" encoding="UTF-8"?>\n' + svg_content
+            # Generate metadata for this symbol
+            lib_name = generate_lib_name(name)
+            is_restricted = name in restricted_symbols
+            categories = symbol_categories.get(name, [])
+            
+            # Create metadata element
+            metadata = create_metadata_element(name, lib_name, is_restricted, categories)
+            
+            # Insert metadata after the opening <svg> tag
+            svg_start = svg_content.find('<svg')
+            if svg_start != -1:
+                svg_tag_end = svg_content.find('>', svg_start) + 1
+                svg_with_metadata = svg_content[:svg_tag_end] + "\n" + metadata + svg_content[svg_tag_end:]
+                full_svg = '<?xml version="1.0" encoding="UTF-8"?>\n' + svg_with_metadata
+            else:
+                # Fallback if <svg tag not found
+                full_svg = '<?xml version="1.0" encoding="UTF-8"?>\n' + svg_content
 
             output_path = os.path.join(output_dir, f"{name}.svg")
             with open(output_path, "w") as f:
