@@ -140,12 +140,15 @@ def clean_svgs(base_path):
 
 
 def update_readme_badge():
-    """Update the SF Symbols badge in README.md with the current SVG count."""
-    svg_count = count_extracted_svgs()
-
-    if svg_count == 0:
-        print(f"{Colors.YELLOW}⊘{Colors.RESET} No extracted SVGs found. Run {Colors.BOLD}./sfe{Colors.RESET} first to extract SVGs.")
+    """Update the SF Symbols badge in README.md with the symbol count from names.txt."""
+    # Read symbol count from names.txt
+    names_file = os.path.join(BASE_DIR, "names.txt")
+    if not os.path.exists(names_file):
+        print(f"{Colors.RED}ERROR:{Colors.RESET} names.txt not found")
         return False
+    
+    with open(names_file, "r") as f:
+        svg_count = len([line for line in f if line.strip()])
 
     readme_path = os.path.join(BASE_DIR, "README.md")
     if not os.path.exists(readme_path):

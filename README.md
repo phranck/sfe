@@ -1,5 +1,5 @@
 [![Mastodon: @phranck](https://img.shields.io/badge/Mastodon-@LAYERED-6364ff.svg?style=flat)](https://oldbytes.space/@LAYERED)
-![SF Symbols](https://img.shields.io/badge/SF%20Symbols-6984-blue?style=flat&logo=apple&logoColor=white)
+![SF Symbols](https://img.shields.io/badge/SF%20Symbols-7007-blue?style=flat&logo=apple&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # sfe - SF Symbols Extractor
