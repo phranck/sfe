@@ -6,7 +6,36 @@ import shutil
 import sys
 import time
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Determine base directory for data files
+def get_base_dir():
+    """Find the base directory containing data files."""
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Check if running from source directory
+    if os.path.exists(os.path.join(script_dir, 'names.txt')):
+        return script_dir
+    
+    # Check Homebrew Cellar path (when installed via brew)
+    # Script is in: /opt/homebrew/bin/sfe
+    # Data is in: /opt/homebrew/share/sfe/
+    homebrew_share = os.path.join(os.path.dirname(script_dir), 'share', 'sfe')
+    if os.path.exists(os.path.join(homebrew_share, 'names.txt')):
+        return homebrew_share
+    
+    # Installed via pip/pipx - check common installation paths
+    prefix_paths = [
+        os.path.join(sys.prefix, 'share', 'sfe'),
+        os.path.join(sys.prefix, 'local', 'share', 'sfe'),
+    ]
+    
+    for path in prefix_paths:
+        if os.path.exists(os.path.join(path, 'names.txt')):
+            return path
+    
+    # Fallback to script directory
+    return script_dir
+
+BASE_DIR = get_base_dir()
 
 # ANSI color codes
 class Colors:

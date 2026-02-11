@@ -9,10 +9,18 @@ import time
 # Determine base directory for data files
 def get_base_dir():
     """Find the base directory containing data files."""
-    # Check if running from source directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Check if running from source directory
     if os.path.exists(os.path.join(script_dir, 'names.txt')):
         return script_dir
+    
+    # Check Homebrew Cellar path (when installed via brew)
+    # Script is in: /opt/homebrew/bin/sfe
+    # Data is in: /opt/homebrew/share/sfe/
+    homebrew_share = os.path.join(os.path.dirname(script_dir), 'share', 'sfe')
+    if os.path.exists(os.path.join(homebrew_share, 'names.txt')):
+        return homebrew_share
     
     # Installed via pip/pipx - check common installation paths
     prefix_paths = [
@@ -24,7 +32,7 @@ def get_base_dir():
         if os.path.exists(os.path.join(path, 'names.txt')):
             return path
     
-    # Fallback to current directory
+    # Fallback to script directory
     return script_dir
 
 BASE_DIR = get_base_dir()
