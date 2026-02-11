@@ -23,6 +23,11 @@ None
 - Released v1.1.0 with embedded metadata feature
 - Removed info.txt export (data now in SVG metadata)
 - Added --version/-v flag
+- Updated to SF Symbols 7.3 with version in metadata
+- Added palette and multicolor rendering modes (4 total)
+- Added interactive output directory handling (delete/merge/cancel)
+- Released v1.2.0 and v1.2.1
+- Improved statistics output clarity (30 categories now visible)
 
 ## Notes
 - Homebrew formula uses system Python to avoid unnecessary dependencies
@@ -31,5 +36,7 @@ None
 - Badge auto-updates via GitHub Action when names.txt changes
 - Extracted SVGs used directly by sf-symbols-lib project
 - Each SVG is self-describing with W3C standard <metadata> tags
+- Default output to ./svgs directory with interactive prompts
+- 4 rendering modes: monochrome, hierarchical, palette, multicolor
 
 **Last Updated:** 2026-02-11

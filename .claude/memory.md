@@ -16,8 +16,10 @@ sfe/
 │   ├── names.txt           # Symbol names (7007 entries)
 │   ├── info.txt            # Restricted symbols (574 entries)
 │   ├── categories/         # Category mappings (30 files)
-│   ├── hierarchical/svgs.txt
-│   └── monochrome/svgs.txt
+│   ├── monochrome/svgs.txt # Monochrome rendering mode
+│   ├── hierarchical/svgs.txt # Hierarchical rendering mode
+│   ├── palette/svgs.txt    # Palette rendering mode
+│   └── multicolor/svgs.txt # Multicolor rendering mode
 ├── pyproject.toml          # Python package metadata
 ├── setup.py                # Data files installation
 └── homebrew/sfe.rb         # Homebrew formula
@@ -46,11 +48,12 @@ None (Python standard library only)
 
 1. **Initialization:** Detect BASE_DIR based on installation method
 2. **Validation:** Check for required files (.data/names.txt, .data/info.txt, .data/*/svgs.txt)
-3. **Load Metadata Sources:** Categories (30 files), restricted symbols (574), names (7007)
-4. **Extraction:** Split concatenated SVGs by `<?xml` delimiter
-5. **Metadata Generation:** Create <metadata> element with Apple name, Lib name, restricted flag, categories
-6. **Metadata Injection:** Insert <metadata> after opening <svg> tag
-7. **Output:** Write individual .svg files with embedded metadata to variant directories
+3. **Output Setup:** Determine output directory (default: ./svgs), handle existing files interactively
+4. **Load Metadata Sources:** Categories (30 files), restricted symbols (574), names (7007)
+5. **Extraction:** Loop through 4 rendering modes, split concatenated SVGs by `<?xml` delimiter
+6. **Metadata Generation:** Create <metadata> element with Apple name, Lib name, restricted flag, rendering mode, SF Symbols version, categories
+7. **Metadata Injection:** Insert <metadata> after opening <svg> tag
+8. **Output:** Write individual .svg files with embedded metadata to rendering mode directories
 
 ### Installation Paths
 
@@ -78,11 +81,12 @@ None (Python standard library only)
 
 ## Patterns & Conventions
 
-### Adding a New Variant
+### Adding a New Rendering Mode
 
 1. Add directory with `svgs.txt` to `SVG_BASE_DIRS` list
 2. Update `STRUCTURE_DIAGRAM` for help text
-3. No code changes needed (loop-based processing)
+3. Update Homebrew formula to install new svgs.txt
+4. No other code changes needed (loop-based processing)
 
 ### Data File Format
 
@@ -136,15 +140,16 @@ Uses ANSI codes via `Colors` class:
 ## Current State
 
 **Branch:** main  
-**Version:** v1.1.0  
-**SF Symbols:** 7.3 (7007 symbols, 30 categories, 574 restricted)
+**Version:** v1.2.1  
+**SF Symbols:** 7.3 (7007 symbols, 30 categories, 574 restricted, 4 rendering modes)
 
 ### Recent Changes
-- Released v1.1.0 with embedded metadata feature
-- Added --version/-v flag (displays "sfe 1.1.0")
-- Removed info.txt export (data now in SVG metadata)
-- Embedded comprehensive metadata in exported SVGs (Apple name, Lib name, restricted flag, categories)
-- Reorganized data files into .data/ directory structure
+- Released v1.2.1 with improved statistics output
+- Added palette and multicolor rendering modes (4 total)
+- Added interactive output directory handling (delete/merge/cancel)
+- Default output to ./svgs directory
+- SF Symbols version and rendering mode in metadata
+- Statistics now show all 30 categories
 
 ### Known Issues
 None

@@ -3,9 +3,9 @@
 **Branch:** main  
 **Tests:** N/A (no test suite)  
 **Build:** Passing (Python script)  
-**Version:** v1.1.0 (released)
+**Version:** v1.2.1 (released)
 **SF Symbols:** 7.3
-**Symbol Count:** 7007 (30 categories, 574 restricted)
+**Symbols:** 7007 (30 categories, 574 restricted, 4 rendering modes)
 
 ## Active Task
 None
