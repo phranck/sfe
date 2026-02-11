@@ -6,7 +6,7 @@ import shutil
 import sys
 import time
 
-VERSION = "1.2.0"
+VERSION = "1.2.1"
 SF_SYMBOLS_VERSION = "7.3"
 
 # Determine base directory for data files
