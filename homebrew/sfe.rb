@@ -1,8 +1,8 @@
 class Sfe < Formula
   desc "SF Symbols Extractor - Extract individual SVG files with embedded metadata from SF Symbols 7.3"
   homepage "https://github.com/phranck/sfe"
-  url "https://github.com/phranck/sfe/archive/refs/tags/v1.2.0.tar.gz"
-  sha256 "3405809730c17e11a2fc8194b13cac4edbb7f72a952e15cae8ea96fe0044db6c"
+  url "https://github.com/phranck/sfe/archive/refs/tags/v1.2.1.tar.gz"
+  sha256 "3c591475c99e5d12fd7538d51ff1f21fd0b23199fb550cb08f9f9cd2e29b5116"
   license "MIT"
 
   def install
