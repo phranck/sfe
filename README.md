@@ -6,7 +6,7 @@
 
 A Python tool to extract individual SVG files from concatenated `svgs.txt` files.
 
-Current version: **[SF Symbols 7.0](https://developer.apple.com/sf-symbols/)**
+Current version: **[SF Symbols 7.2](https://developer.apple.com/sf-symbols/)**
 
 ## Directory Structure
 
@@ -31,9 +31,15 @@ The directories are organized by SF Symbol rendering variants:
 
 ## Installation
 
-Install `sfe` globally on your system using `pipx` (recommended) or `pip`:
+Install `sfe` globally on your system using Homebrew, pipx, or pip:
 
-### Using pipx (Recommended)
+### Using Homebrew (Recommended)
+
+```bash
+brew install phranck/tap/sfe
+```
+
+### Using pipx
 
 ```bash
 # Install pipx if not already installed
@@ -61,6 +67,9 @@ After installation, the `sfe` command is available globally in your terminal.
 ### Uninstall
 
 ```bash
+# If installed with Homebrew
+brew uninstall sfe
+
 # If installed with pipx
 pipx uninstall sfe
 

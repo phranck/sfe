@@ -7,6 +7,9 @@
 # Python
 __pycache__/
 *.pyc
+build/
+dist/
+*.egg-info/
 
 # Claude Code
 .claude/
