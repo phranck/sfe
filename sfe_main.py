@@ -351,10 +351,50 @@ def main():
     # Determine output base directory
     if args.output:
         output_base = os.path.expanduser(args.output)
-        os.makedirs(output_base, exist_ok=True)
-        print(f"{Colors.GREEN}✓{Colors.RESET} Output directory: {Colors.BOLD}{output_base}{Colors.RESET}")
     else:
-        output_base = BASE_DIR
+        # Default to ./svgs in current working directory
+        output_base = os.path.join(os.getcwd(), "svgs")
+    
+    # Check if output directory exists and has SVG files
+    existing_svgs = []
+    if os.path.exists(output_base):
+        for variant_dir in SVG_BASE_DIRS:
+            variant_path = os.path.join(output_base, variant_dir)
+            if os.path.exists(variant_path):
+                svg_files = [f for f in os.listdir(variant_path) if f.endswith(".svg")]
+                existing_svgs.extend(svg_files)
+    
+    # Handle existing SVGs
+    if existing_svgs:
+        print(f"{Colors.YELLOW}⚠{Colors.RESET}  Output directory {Colors.BOLD}{output_base}{Colors.RESET} contains {Colors.BOLD}{len(existing_svgs)}{Colors.RESET} existing SVG files")
+        print(f"\n{Colors.BOLD}What would you like to do?{Colors.RESET}")
+        print(f"  {Colors.CYAN}[1]{Colors.RESET} Delete existing files and extract fresh")
+        print(f"  {Colors.CYAN}[2]{Colors.RESET} Merge (overwrite existing, keep others)")
+        print(f"  {Colors.CYAN}[3]{Colors.RESET} Cancel")
+        
+        while True:
+            try:
+                choice = input(f"\n{Colors.BOLD}Your choice [1-3]:{Colors.RESET} ").strip()
+                if choice == "1":
+                    # Delete existing SVGs
+                    deleted = clean_svgs(output_base)
+                    print(f"{Colors.GREEN}✓{Colors.RESET} Deleted {Colors.BOLD}{deleted:,}{Colors.RESET} existing SVG files")
+                    break
+                elif choice == "2":
+                    # Merge mode
+                    print(f"{Colors.CYAN}ℹ{Colors.RESET}  Merging with existing files (overwriting duplicates)")
+                    break
+                elif choice == "3":
+                    print(f"{Colors.YELLOW}⊘{Colors.RESET} Cancelled by user")
+                    sys.exit(0)
+                else:
+                    print(f"{Colors.RED}✗{Colors.RESET} Invalid choice. Please enter 1, 2, or 3")
+            except (KeyboardInterrupt, EOFError):
+                print(f"\n{Colors.YELLOW}⊘{Colors.RESET} Cancelled by user")
+                sys.exit(0)
+    
+    os.makedirs(output_base, exist_ok=True)
+    print(f"{Colors.GREEN}✓{Colors.RESET} Output directory: {Colors.BOLD}{output_base}{Colors.RESET}")
 
     # Statistics
     stats = {

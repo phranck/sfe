@@ -114,18 +114,26 @@ sfe --check
 # Update SF Symbols badge in README
 sfe --update-badge
 
-# Extract SVGs to custom directory (preserves directory structure)
+# Extract all SVGs to ./svgs (default, interactive prompt if exists)
+sfe
+
+# Extract SVGs to custom directory (interactive prompt if exists)
 sfe --output ~/Desktop/SVGs
 
-# Delete all extracted SVGs (current directory)
+# Delete all extracted SVGs from ./svgs
 sfe --clean
 
-# Delete all extracted SVGs (custom directory)
+# Delete all extracted SVGs from custom directory
 sfe --clean ~/Desktop/SVGs
-
-# Extract all SVGs
-sfe
 ```
+
+### Interactive Mode
+
+When extracting SVGs, if the output directory already contains SVG files, you'll be prompted:
+
+1. **Delete existing files and extract fresh** - Removes all existing SVGs and extracts
+2. **Merge** - Overwrites duplicate files, keeps others
+3. **Cancel** - Abort the operation
 
 The script extracts individual `.svg` files from each `svgs.txt` into their respective directories.
 
