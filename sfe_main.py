@@ -262,19 +262,15 @@ def update_readme_badge():
 
     # Calculate statistics
     variants = len(SVG_BASE_DIRS)  # monochrome, dualtone
-    colors = 1  # no color variants
-    per_variant = svg_count * colors
-    total_svgs = svg_count * variants * colors
-    per_variant = svg_count * colors
-    total_svgs = svg_count * variants * colors
+    per_variant = svg_count
+    total_svgs = svg_count * variants
 
     # Format numbers right-aligned
     width = len(f"{total_svgs:,}")
 
     print(f"{Colors.GREEN}✓{Colors.RESET} Updated SF Symbols badge to {Colors.BOLD}{svg_count}{Colors.RESET}")
     print(f"  {Colors.DIM}├─{Colors.RESET} {Colors.CYAN}{total_svgs:>{width},}{Colors.RESET} SVGs total")
-    print(f"  {Colors.DIM}├─{Colors.RESET} {Colors.CYAN}{per_variant:>{width},}{Colors.RESET} SVGs per variant")
-    print(f"  {Colors.DIM}└─{Colors.RESET} {Colors.CYAN}{svg_count:>{width},}{Colors.RESET} SVGs per variant and color")
+    print(f"  {Colors.DIM}└─{Colors.RESET} {Colors.CYAN}{per_variant:>{width},}{Colors.RESET} SVGs per mode")
     return True
 
 

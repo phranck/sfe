@@ -1,11 +1,47 @@
 {
   "permissions": {
-      "allow": [
+    "allow": [
       "Bash(ls:*)",
       "Bash(chmod:*)",
       "Bash(git init:*)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"automation commit\")"
+      "Bash(git commit -m \"automation commit\")",
+      "Bash(wc:*)",
+      "Bash(git -C /Users/phranck/Developer/React/Packages/sfe log --oneline)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nDocs: Add comprehensive CLAUDE.md with architecture and development guide\n\n- Project overview and setup instructions \\(Homebrew, pipx, pip\\)\n- High-level architecture: data flow from names/categories to 14K SVGs\n- Key patterns: installation-aware config, self-describing output, DRY principle\n- CLI commands and debugging tips\n- Code conventions from copilot-instructions\n- Git standards \\(commit prefixes, branch workflow\\)\n- Advanced tasks: new rendering modes, SF Symbols updates, release process\n\nFuture Claude instances can quickly understand the single-file architecture,\nmetadata injection pattern, and development workflows without reading source code.\n\nCo-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(openspec:*)",
+      "Bash(openspec version:*)",
+      "Bash(openspec help:*)",
+      "Bash(grep:*)",
+      "Bash(cat:*)",
+      "Bash(__NEW_LINE_389b570aba12b663__ echo \"=== New Reference Files ===\")",
+      "Bash(__NEW_LINE_389b570aba12b663__ ls -lh ~/.claude/references/{session-state-schema,whats-next-template,migration-guide}.md)",
+      "Bash(__NEW_LINE_389b570aba12b663__ echo \"\")",
+      "Bash(__NEW_LINE_389b570aba12b663__ echo \"=== New Command Definitions ===\")",
+      "Bash(__NEW_LINE_389b570aba12b663__ ls -lh ~/.claude/commands/{save,remember}.md)",
+      "Bash(__NEW_LINE_389b570aba12b663__ echo \"=== File Verification ===\")",
+      "Bash(__NEW_LINE_389b570aba12b663__ wc -l ~/.claude/references/{session-state-schema,whats-next-template,migration-guide}.md ~/.claude/commands/{save,remember}.md)",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ echo \"=== Test Files on sfe Project ===\")",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ echo \"\")",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ echo \"WHATS-NEXT.md in project root:\")",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ ls -lh /Users/phranck/Developer/React/Packages/sfe/WHATS-NEXT.md)",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ echo \"session-state.json in .claude/:\")",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ ls -lh /Users/phranck/Developer/React/Packages/sfe/.claude/session-state.json)",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ echo \"=== Verify JSON Structure ===\")",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ python3 -m json.tool /Users/phranck/Developer/React/Packages/sfe/.claude/session-state.json)",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ echo \"...\")",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ echo \"✓ JSON is valid\")",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ echo \"=== Verify Timestamps Match ===\")",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ echo \"WHATS-NEXT.md Last Updated:\")",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ grep \"Last Updated\" /Users/phranck/Developer/React/Packages/sfe/WHATS-NEXT.md)",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ echo \"session-state.json timestamp:\")",
+      "Bash(__NEW_LINE_df580d5b15c31ff9__ grep \"timestamp\" /Users/phranck/Developer/React/Packages/sfe/.claude/session-state.json)",
+      "Bash(__NEW_LINE_f0047dd8be5946e4__ git diff --cached --name-only)",
+      "Bash(__NEW_LINE_8d1eb20a5c10fce5__ echo \"=== Git Status ===\")",
+      "Bash(__NEW_LINE_8d1eb20a5c10fce5__ echo \"\")",
+      "Bash(__NEW_LINE_72a95428b8aa242f__ echo \"=== Detailed changes ===\" git diff .claude/memory.md)",
+      "Bash(__NEW_LINE_00cce22e7140031f__ git diff)"
     ]
   }
 }

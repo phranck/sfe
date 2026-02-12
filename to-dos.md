@@ -8,6 +8,9 @@ None
 
 ## Completed
 
+### 2026-02-12
+- Removed palette/multicolor rendering modes, renamed hierarchical to dualtone (v1.3.0)
+
 ### 2026-02-11
 - Added pip/pipx installation support with pyproject.toml and setup.py
 - Changed license from CC-BY-NC-SA to MIT
@@ -24,7 +27,6 @@ None
 - Removed info.txt export (data now in SVG metadata)
 - Added --version/-v flag
 - Updated to SF Symbols 7.3 with version in metadata
-- Added rendering modes (reduced to monochrome + dualtone)
 - Added interactive output directory handling (delete/merge/cancel)
 - Released v1.2.0 and v1.2.1
 - Improved statistics output clarity (30 categories now visible)
@@ -39,4 +41,4 @@ None
 - Default output to ./svgs directory with interactive prompts
 - 2 rendering modes: monochrome, dualtone
 
-**Last Updated:** 2026-02-11
+**Last Updated:** 2026-02-12
